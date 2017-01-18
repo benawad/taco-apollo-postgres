@@ -1,57 +1,90 @@
 # taco-apollo-postgres
 
-> 
+## Setup
 
-## About
+After cloning the repo, install the dependencies.
 
-This project uses [Feathers](http://feathersjs.com). An open source web framework for building modern real-time applications.
+`npm install`
 
-## Getting Started
+Create database
 
-Getting up and running is as easy as 1, 2, 3.
+`sudo -u postgres createdb tacodb`
 
-1. Make sure you have [NodeJS](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed.
-2. Install your dependencies
-    
-    ```
-    cd path/to/taco-apollo-postgres; npm install
-    ```
+I use some of the new Javascript features, so you need `babel-node`
 
-3. Start your app
-    
-    ```
-    npm start
-    ```
+`npm install -g babel-cli`
 
-## Testing
+Start up the server
 
-Simply run `npm test` and all your tests in the `test/` directory will be run.
+`npm start`
 
-## Scaffolding
+You can access it at
 
-Feathers has a powerful command line interface. Here are a few things it can do:
+`http://localhost:3030/graphiql`
+
+## Example Usage GraphiQL
+
+Create user
 
 ```
-$ npm install -g feathers-cli             # Install Feathers CLI
-
-$ feathers generate service               # Generate a new Service
-$ feathers generate hook                  # Generate a new Hook
-$ feathers generate model                 # Generate a new Model
-$ feathers help                           # Show all commands
+mutation {
+  signUp(email: "test5", password: "test5") {
+    id
+  }
+}
 ```
 
-## Help
+Login
 
-For more information on all the things you can do with Feathers visit [docs.feathersjs.com](http://docs.feathersjs.com).
+```
+mutation {
+  loggin(email: "test5", password: "test5") {
+    token
+  }
+}
+```
 
-## Changelog
+Create taco
 
-__0.1.0__
+```
+mutation {
+  createTaco(meat: "chicken", cheese: "cheddar", salsa: "hot") {
+    id
+  }
+}
+```
 
-- Initial release
+## Authentication
 
-## License
+You can make queries through POST requests to `http://localhost:3030/graphql`
 
-Copyright (c) 2016
+To create/access `secretBurritos`, you need to add a JWT token to the body of your POST request which you get once you login.
 
-Licensed under the [MIT license](LICENSE).
+
+## Example Usage POST Requests
+
+Create secretBurrito
+
+```
+{
+	"query": "mutation { createSecretBurrito(size: \"huge\") { id } }",
+	"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNDg0NzY2NDk3LCJleHAiOjE0ODQ4NTI4OTcsImlzcyI6ImZlYXRoZXJzIn0.Yelj_wq0JJ8bQ-QwasVaX0qNef-9JK_79tvOY4A2suw"
+}
+```
+
+Get all secretBurritos that user has created
+
+```
+{
+	"query": "{ viewer { id secretBurritos { size } } }",
+	"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNDg0NzY1NzA5LCJleHAiOjE0ODQ4NTIxMDksImlzcyI6ImZlYXRoZXJzIn0.b6SCqZQD9PbaCQMslCpbQpGbm1GdwIdQarN3gUxRK-8"
+}
+```
+
+Login and get all secretBurritos that user has created
+
+```
+{
+	"query": "mutation { loggin(email: \"test5\" password: \"test5\") { token data { secretBurritos { size } } } }"
+}
+```
