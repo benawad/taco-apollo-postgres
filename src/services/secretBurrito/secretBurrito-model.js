@@ -12,6 +12,10 @@ module.exports = function(sequelize) {
     size: {
       type: Sequelize.STRING,
       allowNull: true
+    },
+    ownerId: {
+      type: Sequelize.INTEGER,
+      allowNull: true
     }
   }, {
     freezeTableName: true

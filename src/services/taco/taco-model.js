@@ -20,8 +20,9 @@ module.exports = function(sequelize) {
     salsa: {
       type: Sequelize.STRING,
       allowNull: true
-    },
-  }, {
+    }
+  },
+  {
     freezeTableName: true
   });
 
