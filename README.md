@@ -2,30 +2,27 @@
 
 ## Setup
 
-After cloning the repo, install the dependencies.
+Begin by cloning the repository:  
+`git clone https://github.com/benawad/taco-apollo-postgres.git`
 
+Setup npm and install the dependencies for the project:  
 `npm install`
 
-Create database
-
+Create the database:  
 `sudo -u postgres createdb tacodb`
 
-I use some of the new Javascript features, so you need `babel-node`
-
+The project uses ES6 Javascript features and requires `babel-node`:  
 `npm install -g babel-cli`
 
-Start up the server
-
+Start up the server:  
 `npm start`
 
-You can access it at
-
+To access the project navigate to:  
 `http://localhost:3030/graphiql`
 
 ## Example Usage GraphiQL
 
-Create user
-
+Creating a User:
 ```
 mutation {
   signUp(email: "test5", password: "test5") {
@@ -34,8 +31,7 @@ mutation {
 }
 ```
 
-Login
-
+Logging In as a User:
 ```
 mutation {
   loggin(email: "test5", password: "test5") {
@@ -44,8 +40,7 @@ mutation {
 }
 ```
 
-Create taco
-
+Creating a Taco:
 ```
 mutation {
   createTaco(meat: "chicken", cheese: "cheddar", salsa: "hot") {
@@ -56,15 +51,13 @@ mutation {
 
 ## Authentication
 
-You can make queries through POST requests to `http://localhost:3030/graphql`
+Create Queries by sending POST requests to `http://localhost:3030/graphql`
 
-To create/access `secretBurritos`, you need to add a JWT token to the body of your POST request which you get once you login.
-
+To create/access `secretBurritos` add a JWT token to the body of the POST request which is recieved when logging in.
 
 ## Example Usage POST Requests
 
-Create secretBurrito
-
+Create secretBurrito:
 ```
 {
 	"query": "mutation { createSecretBurrito(size: \"huge\") { id } }",
@@ -72,8 +65,7 @@ Create secretBurrito
 }
 ```
 
-Get all secretBurritos that user has created
-
+Get all secretBurritos that user has created:
 ```
 {
 	"query": "{ viewer { id secretBurritos { size } } }",
@@ -81,8 +73,7 @@ Get all secretBurritos that user has created
 }
 ```
 
-Login and get all secretBurritos that user has created
-
+Login and get all secretBurritos that user has created:
 ```
 {
 	"query": "mutation { loggin(email: \"test5\" password: \"test5\") { token data { secretBurritos { size } } } }"
