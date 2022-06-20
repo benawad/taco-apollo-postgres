@@ -53,7 +53,7 @@ mutation {
 
 Create Queries by sending POST requests to `http://localhost:3030/graphql`
 
-To create/access `secretBurritos` add a JWT token to the body of the POST request which is recieved when logging in.
+To create/access `secretBurritos` add a JWT token to the body of the POST request which is received when logging in.
 
 ## Example Usage POST Requests
 
@@ -79,3 +79,4 @@ Login and get all secretBurritos that user has created:
 	"query": "mutation { loggin(email: \"test5\" password: \"test5\") { token data { secretBurritos { size } } } }"
 }
 ```
+
